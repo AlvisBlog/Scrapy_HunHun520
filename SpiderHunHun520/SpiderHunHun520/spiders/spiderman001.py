@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
+import os
 from urllib.parse import quote
 from time import sleep
 
@@ -24,6 +25,11 @@ class hunhun520:
         self.spiderUrl=[]
 
         self.novelLink=[]
+
+        try:
+            os.mkdir('SearchResult')
+        except Exception as e:
+            pass
 
     def get_novel_pages(self):
 
@@ -62,7 +68,7 @@ class hunhun520:
 
             print("正在访问第{}页".format(pageNum+1))
 
-            with open('搜索{}的小说结果.txt'.format(self.novelName),'a',encoding='utf8') as f:
+            with open('./SearchResult/搜索{}的小说结果.txt'.format(self.novelName),'a',encoding='utf8') as f:
 
                 f.write("正在访问第{}页".format(pageNum+1)+"\n")
 
@@ -96,7 +102,7 @@ class hunhun520:
 
                     print()
 
-                    with open('搜索{}的小说结果.txt'.format(self.novelName), 'a', encoding='utf8') as f:
+                    with open('./SearchResult/搜索{}的小说结果.txt'.format(self.novelName), 'a', encoding='utf8') as f:
 
                         f.write("小说类型:{},链接:{},名称:{},最新一章:{},作者:{},最后更新时间:{}".format(novel_type,novel_link,novel_name,novel_last_chapter,novel_author,novel_last_pubdate)+"\n")
 
@@ -104,7 +110,7 @@ class hunhun520:
 
             except requests.exceptions.ConnectTimeout as e1:
 
-                print("访问第{}页失败:ConnectTimeout".format(pageNum + 1) + "\n")
+                print("./SearchResult/访问第{}页失败:ConnectTimeout".format(pageNum + 1) + "\n")
 
                 with open('搜索{}的小说结果.txt'.format(self.novelName), 'a', encoding='utf8') as f:
 
@@ -116,7 +122,7 @@ class hunhun520:
 
                 print("访问第{}页失败:ConnectionError".format(pageNum + 1) + "\n")
 
-                with open('搜索{}的小说结果.txt'.format(self.novelName), 'a', encoding='utf8') as f:
+                with open('./SearchResult/搜索{}的小说结果.txt'.format(self.novelName), 'a', encoding='utf8') as f:
 
                     f.write("访问第{}页失败:ConnectionError".format(pageNum + 1) + "\n")
 
@@ -126,7 +132,7 @@ class hunhun520:
 
                 print("访问第{}页失败:ReadTimeout".format(pageNum + 1) + "\n")
 
-                with open('搜索{}的小说结果.txt'.format(self.novelName), 'a', encoding='utf8') as f:
+                with open('./SearchResult/搜索{}的小说结果.txt'.format(self.novelName), 'a', encoding='utf8') as f:
 
                     f.write("访问第{}页失败:ReadTimeout".format(pageNum + 1) + "\n")
 
